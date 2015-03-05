@@ -1,0 +1,44 @@
+<html>
+<head>
+<meta http-equiv="x-ua-compatible" content="IE=5" />
+</head>
+<body>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<script>
+if (document.all && !document.compatMode)
+{
+	document.write("IE5");
+}
+else if (document.all && !window.XMLHttpRequest)
+{
+	document.write("IE6");
+}
+else if (document.all && !document.querySelector)
+{
+	document.write("IE7");
+}
+else if (document.all && !document.addEventListener)
+{
+	document.write("IE8");
+}
+else if (document.all && !window.atob)
+{
+	document.write("IE9");
+}
+else if (document.all)
+{
+	document.write("IE10");
+}
+else
+{
+	document.write("How did we get here");
+}
+document.write("<br>" + window.navigator.userAgent);
+</script>
+</body>
+</html>
