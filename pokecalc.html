@@ -1,0 +1,219 @@
+<html>
+	<head>
+		<title>Poke&#769;Calc</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				padding: 0;
+				border: 0;
+				margin: 0;
+				text-align: center;
+				background: #ddd;
+				color: #333;
+			}
+			
+			.container {
+				width: 650px;
+				margin: 10px auto;
+				padding: 10px 0;
+				background: #eee;
+			}
+			
+			.rows, .totals {
+				padding: 2px 0;
+				margin: 0 10px;
+				width: 630px;
+				text-align: left;
+				clear:both;
+			}
+			
+			.header {
+				font-weight: bold;
+			}
+			
+			.row, .totalRow {
+				text-overflow: auto;
+				overflow: auto;
+				width: 630px;
+				height: 22px;
+				margin: 2px 0;
+			}
+			
+			.row div {
+				float: left;
+				width: 100px;
+				margin: 0 10px 0 0;
+			}
+			
+			.row input, .row select {
+				display: inline;
+				width: 100px;
+				margin: 0 10px 0 0;
+			}
+			
+			.totalValue {
+				float: left;
+				width: 100px;
+				margin: 0 10px 0 0;
+				text-align: right;
+				font-weight: bold;
+			}
+			
+			.addRow
+			{
+				float: right;
+				margin: 5px;
+			}
+			
+			button
+			{
+				border:0;
+				background: #333;
+				color: #d66;
+				cursor: pointer;
+			}
+			
+			button.addRow
+			{
+				color: #db6;
+			}
+		</style>
+		<script>
+			var pokeArray = [
+				{ "Name" : "Weedle", "Candy" : "12" },
+				{ "Name" : "Pidgey", "Candy" : "12" }
+			];
+			
+			var pokeDropDown = '';
+			
+			function doAddRow() {
+				doAddRowWithData("", 0, 0);
+			}
+			
+			function doAddRowWithData(poke, count, candies) {
+				
+				var fixedDropDown = poke == "" ? 
+										pokeDropDown : 
+										pokeDropDown.replace('>' + poke , ' selected>' + poke);
+				
+				$('.rows').append('<div class="row">'+
+					fixedDropDown + 
+					'<input class="count" onchange="evaluateCandies()" type="text" value="'+count+'" />' + 
+					'<input class="candies" onchange="evaluateCandies()" type="text" value="'+candies+'" />' + 
+					'<input class="evolutions" readonly="true" type="text" value="0" />' + 
+					'<input class="evolveMore" readonly="true" type="text" value="" />' + 
+					'<button onclick="doRemoveRow(this)">X</button>' + 
+					'</div>');
+			}
+			
+			function doRemoveRow(obj) {
+				$(obj.parentNode).remove();
+				evaluateCandies();
+			}
+
+			function buildDropDown() {
+				pokeDropDown = '<select class="poke" onchange="evaluateCandies()"><option value="0"></option>';
+				$.each(pokeArray, function() { pokeDropDown += '<option value="' + this.Candy + '">' + this.Name + '</option>'; });
+				pokeDropDown += '</select>';
+			}
+			
+			function evaluateCandies() {
+				var totalEvolve = 0;
+				var dataStore = [];
+				
+				$('.row:not(.header)').each(function(){
+					var toEvolve = $(this).find('.poke').val();
+					if(toEvolve==0)
+					{
+						return;
+					}
+					var count = $(this).find('.count').val();
+					var candies = $(this).find('.candies').val();
+					var poke = $(this).find('.poke').children(':selected').text();
+					var evolutions = $(this).find('.evolutions');
+					var evolveMore = $(this).find('.evolveMore');
+					
+					dataStore.push({ "Poke" : poke, "Count" : count, "Candies" : candies });
+					
+					if(count==0 || candies==0) {
+						evolutions.val('0');
+						evolveMore.val('');
+						return;
+					}
+					
+					var adjustedCandies = candies - 1;
+					var adjustedEvolve = toEvolve - 1;
+					var canEvolve = Math.floor(adjustedCandies / adjustedEvolve);
+					
+					if (canEvolve > count) {
+						totalEvolve += Number(count);
+						evolutions.val(count);
+						evolveMore.val('Candies for: ' + String(canEvolve));
+						return;
+					}
+					
+					totalEvolve += Number(canEvolve);
+					evolutions.val(canEvolve);
+					evolveMore.val('');
+				});
+				
+				document.cookie = 'pokeTable='+JSON.stringify(dataStore);
+				
+				if(totalEvolve == 0) {
+					$('.totals').html('');
+					return;
+				}
+				
+				$('.totals').html('<div class="totalRow"><div class="totalValue">' + String(totalEvolve) + '</div><div>Total Evolves</div></div>' + 
+									'<div class="totalRow"><div class="totalValue">' + String(totalEvolve * 500) + '</div><div>Experience</div></div>' + 
+									'<div class="totalRow"><div class="totalValue">' + String(totalEvolve * 1000) + '</div><div>with Lucky Egg or Double XP</div></div>' + 
+									'<div class="totalRow"><div class="totalValue">' + String(totalEvolve * 2000) + '</div><div>with Lucky Egg and Double XP</div></div>');
+			}
+			
+			function getPokeTableCookie() {
+				return document.cookie.replace(/(?:(?:^|.*;\s*)pokeTable\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+			}
+			
+			function processCookieData(dataInCookies) {
+				var dataStore = JSON.parse(dataInCookies);
+				$.each(dataStore,function() { doAddRowWithData(this.Poke, this.Count, this.Candies); });
+				evaluateCandies();
+			}
+			
+			$(function(){
+				buildDropDown();
+				var dataInCookies = getPokeTableCookie();
+				if(dataInCookies != "")
+				{
+					try
+					{
+						processCookieData(dataInCookies);
+					}
+					catch(err)
+					{
+						alert("Unable to retrive stored data, cookie corruption");
+					}
+				}
+			});
+			</script>
+	</head>
+	<body>
+		<div class="container">	
+			<h1>Poke&#769;Calc</h1>
+			<h2>Calculates your evolve numbers</h1>
+			<div class="rows">
+				<div class="header row">
+					<div>Pokemon</div>
+					<div>Count</div>
+					<div>Candies</div>
+					<div>Evolutions</div>
+					<div>Evolve More</div>
+				</div>
+			</div>
+			<button class="addRow" onclick="doAddRow()">Add Row</button>
+			<div class="totals">
+			</div>
+		</div>
+	</body>
+</html>
