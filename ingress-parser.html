@@ -54,8 +54,7 @@ function doParse() {
 	if(source.indexOf("plext") > -1){
 		parsePlext(obj);
 	} else {
-		$(".result").val("Entities coming when I can work them out");
-		//parseEntities(obj);
+		parseEntities(obj);
 	}
 }
 
@@ -64,7 +63,7 @@ function parseEntities(obj)
 	var result = processEntities(obj);
 	var str = "";
 	for(var i = 0; i < result.length; i++){
-		str += result[i].lat + "\t" + result[i].lon + "\r\n";
+		str += result[i].team + "\t" + result[i].lat + "\t" + result[i].lon + "\r\n";
 	}
 	$(".result").val(str);
 }
@@ -102,13 +101,42 @@ function processPortals(plextResult)
 	return portals;
 }
 
-function processEntities(entityResult)
+function processEntities(obj)
 {
 	var portals = [];
 	var keys = Object.keys(obj.result.map);
 	for(var i = 0; i < keys.length; i++)
 	{
+		if(obj.result.map[keys[i]].error !== undefined)
+		{
+			continue;
+		}
 		var entities = obj.result.map[keys[i]].gameEntities;
+		for(var j = 0; j < entities.length; j++)
+		{
+			if(entities[j][2][0] !== "p")
+			{
+				continue;
+			}
+			
+			var teamId = entities[j][2][1];
+			var team = teamId == "N" ? "Neutral" :
+						teamId == "E" ? "Englightened" :
+						teamId == "R" ? "Resistance" :
+						 "Whoops";
+			
+			var lat = entities[j][2][2]/1E6;
+			var lon = entities[j][2][3]/1E6;
+			
+			
+			if(portals.findIndex(function(portal){return portal.lat === lat && portal.lon === lon;}) == -1) {
+				portals.push({
+					team: team,
+					lat: lat,
+					lon: lon
+				});
+			}
+		}
 	}
 	return portals;
 }
@@ -117,7 +145,7 @@ function processEntities(entityResult)
 	<body>
 		<div class="container">	
 			<h1>Ingress Parser</h1>
-			<p>Open Chrome Dev Tools, go to the network tab, copy the contents of getPlext <s>or getEntities</s> in to the box below <a href="/images/ingress-intel.png" target="_blank">(see here)</a></p>
+			<p>Open Chrome Dev Tools, go to the network tab, copy the contents of getPlext or getEntities in to the box below <a href="/images/ingress-intel.png" target="_blank">(see here)</a></p>
 			<textarea class="source"></textarea>
 			<button class="parse" onclick="doParse()">Parse</button>
 			<textarea readonly class="result"></textarea>
