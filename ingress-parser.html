@@ -1,0 +1,126 @@
+<html>
+	<head>
+		<title>Ingress Intel</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				padding: 0;
+				border: 0;
+				margin: 0;
+				text-align: center;
+				background: #ddd;
+				color: #333;
+			}
+			
+			h1 {
+				font-size: 18px;
+			}
+			
+			p {
+				font-size: 14px;
+			}
+			
+			.container {
+				width: 90%;
+				margin: 0 auto;
+				padding: 10px 0;
+			}
+			
+			button
+			{
+				border:0;
+				background: #333;
+				color: #d66;
+				cursor: pointer;
+			}
+			
+			button.parse
+			{
+				color: #db6;
+			}
+			
+			textarea
+			{
+				width: 100%;
+				height: 300px;
+			}
+			
+		</style>
+		<script>
+function doParse() {
+	var source = $(".source").val();
+	var obj = JSON.parse(source);
+	if(source.indexOf("plext") > -1){
+		parsePlext(obj);
+	} else {
+		$(".result").val("Entities coming when I can work them out");
+		//parseEntities(obj);
+	}
+}
+
+function parseEntities(obj)
+{
+	var result = processEntities(obj);
+	var str = "";
+	for(var i = 0; i < result.length; i++){
+		str += result[i].lat + "\t" + result[i].lon + "\r\n";
+	}
+	$(".result").val(str);
+}
+
+function parsePlext(obj)
+{
+	var result = processPortals(obj);
+	var str = "";
+	for(var i = 0; i < result.length; i++){
+		str += result[i].name + "\t" + result[i].lat + "\t" + result[i].lon + "\r\n";
+	}
+	$(".result").val(str);
+}
+
+function processPortals(plextResult)
+{
+	var portals = [];
+	for(var i = 0; i < plextResult.result.length; i++)
+	{
+		var plextMarks = plextResult.result[i][2].plext.markup;
+		for(var j = 0; j < plextMarks.length; j++){
+			if(plextMarks[j][0] === "PORTAL") {
+				var plextMark = plextMarks[j][1];
+				
+				if(portals.findIndex(function(portal){return portal.name === plextMark.name;}) == -1) {
+					portals.push({
+						name: plextMark.name,
+						lat: plextMark.latE6/1E6,
+						lon: plextMark.lngE6/1E6
+					});
+				}
+			}
+		}
+	}
+	return portals;
+}
+
+function processEntities(entityResult)
+{
+	var portals = [];
+	var keys = Object.keys(obj.result.map);
+	for(var i = 0; i < keys.length; i++)
+	{
+		var entities = obj.result.map[keys[i]].gameEntities;
+	}
+	return portals;
+}
+		</script>
+	</head>
+	<body>
+		<div class="container">	
+			<h1>Ingress Parser</h1>
+			<p>Open Chrome Dev Tools, go to the network tab, copy the contents of getPlext <s>or getEntities</s> in to the box below <a href="/images/ingress-intel.png" target="_blank">(see here)</a></p>
+			<textarea class="source"></textarea>
+			<button class="parse" onclick="doParse()">Parse</button>
+			<textarea readonly class="result"></textarea>
+		</div>
+	</body>
+</html>
