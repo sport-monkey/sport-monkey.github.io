@@ -1,0 +1,220 @@
+<html>
+    <head>
+        <style>
+            :root {
+                --duration: 2s;
+                --dank-one: #066;
+                --dank-two: #930;
+                --back-light: #fff;
+                --code-back: #222;
+                --code-default: #fff;
+                --code-variable: #9df;
+                --code-value: #bca;
+                --code-type-ref: #4cb;
+                --code-type: #59d;
+                --code-member: #dda;
+                --code-keyword: #c8c;
+                --code-string: #c97;
+            }
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+                background: var(--back-light);
+            }
+            header {
+                top: 0;
+                background-image: url(images/DSC04933.jpg);
+                background-position-y: center;
+                background-size: cover;
+                padding-top: 30px;
+                border-bottom: var(--dank-two) solid 3px;
+            }
+            header > .menu {
+                margin: -30px 0 0 10px;
+            }
+            header > .menu > a {
+                text-decoration: none;
+                color: var(--back-light);
+                background: var(--dank-one);
+                padding: 5px 8px 2px 8px;
+                border-bottom: 2px solid var(--dank-two);
+            }
+            header > .menu > a:hover {
+                border-bottom: 2px solid var(--back-light);
+            }
+            header > .menu > a.selected {
+                background: var(--dank-two);
+                border:0;
+            }
+            section {
+                padding: 5px 20px 55px 20px;
+                color: var(--dank-one);
+            }
+            footer {
+                position: fixed;
+                bottom: 0px;
+                width: 100%;
+                padding: 5px 0;
+                border-top: var(--dank-one) solid 3px;
+                text-align: center;
+                color: var(--dank-one);
+            }
+            section > * {
+                margin: 0;
+                padding: 5px 20px 10px 20px;
+            }
+            code {
+                background: var(--code-back);
+                color: var(--code-default);
+                display: block;
+                padding: 10px;
+            }
+            code > .var {
+                color: var(--code-variable);
+            }
+            code > .val {
+                color: var(--code-value);
+            }
+            code > .type-ref {
+                color: var(--code-type-ref);
+            }
+            code > .type {
+                color: var(--code-type);
+            }
+            code > .member {
+                color: var(--code-member);
+            }
+            code > .keyword {
+                color: var(--code-keyword);
+            }
+            code > .string {
+                color: var(--code-string);
+            }
+            h1 {
+                color: var(--dank-two);
+            }
+            .logo-canvas {
+                height: 100px;
+                width: 100px;
+                margin: 0 20px 0 auto;
+                perspective: 400px;
+            }
+            .logo-pane {
+                font-weight: bold;
+                height: 100px;
+                width: 100px;
+                position: relative;
+                transform-style: preserve-3d;
+                transform: translateZ(50px);
+            }
+            .logo-1 {
+                position: absolute;
+                height: 100px;
+                width: 100px;
+                color: var(--dank-two);
+                transform: translateZ(100px);
+                animation: a-logo-1 10s ease infinite;
+            }
+            .logo-2 {
+                position: absolute;
+                height: 100px;
+                width: 100px;
+                color: var(--dank-one);
+                transform: translateZ(100px);
+                animation: a-logo-2 10s ease infinite;
+            }
+            .logo-3 {
+                position: absolute;
+                height: 100px;
+                width: 100px;
+                color: var(--dank-one);
+                transform: translateZ(100px);
+                animation: a-logo-3 10s ease infinite;
+            }
+            @keyframes a-logo-1 {
+                  0% { transform: translateZ(100px); }
+                  1% { transform: translateZ(60px); }
+                  2% { transform: translateZ(80px); }
+                  3% { transform: translateZ(40px); }
+                  4% { transform: translateZ(60px); }
+                  5% { transform: rotateX(0deg) translateZ(20px); }
+                 15% { transform: rotateX(360deg) translateZ(20px); }
+                 19% { transform: rotateX(360deg) translateZ(20px); }
+                 20% { transform: rotateX(360deg) translateZ(100px); }
+                100% { transform: rotateX(360deg) translateZ(100px); }
+            }
+            @keyframes a-logo-2 {
+                  0% { transform: translateZ(100px); }
+                  1% { transform: translateZ(60px); }
+                  2% { transform: translateZ(80px); }
+                  3% { transform: translateZ(40px); }
+                  4% { transform: translateZ(60px); }
+                  5% { transform: translateZ(20px); }
+                  7% { transform: rotateX(0deg) translateZ(20px); }
+                 17% { transform: rotateX(360deg) translateZ(20px); }
+                 19% { transform: rotateX(360deg) translateZ(20px); }
+                 20% { transform: rotateX(360deg) translateZ(100px); }
+                100% { transform: rotateX(360deg) translateZ(100px); }
+            }
+            @keyframes a-logo-3 {
+                  0% { transform: translateZ(100px); }
+                  1% { transform: translateZ(60px); }
+                  2% { transform: translateZ(80px); }
+                  3% { transform: translateZ(40px); }
+                  4% { transform: translateZ(60px); }
+                  5% { transform: translateZ(20px); }
+                  9% { transform: rotateX(0deg) translateZ(20px); }
+                 19% { transform: rotateX(360deg) translateZ(20px); }
+                 20% { transform: rotateX(360deg) translateZ(100px); }
+                100% { transform: rotateX(360deg) translateZ(100px); }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <!-- <div class="logo-canvas">
+                <div class="logo-pane">
+                    <div class="logo-1"><br /><br />Sport</div>
+                    <div class="logo-2"><br /><br /><br />Monkey</div>
+                </div>
+            </div> -->
+            <div class="logo-canvas">
+                <div class="logo-pane">
+                    <div class="logo-1"><br />White</div>
+                    <div class="logo-2"><br /><br />Clover</div>
+                    <div class="logo-3"><br /><br /><br />Square</div>
+                </div>
+            </div>
+            <div class="menu">
+                <a href="/">Back</a>
+                <a href="/" class="selected">Home</a>
+                <a href="/">Next</a>
+            </div>
+        </header>
+        <section>
+            <h1>Adventures in Code-Land</h1>
+            <p>The code below has sat here for a long time, it's a memory of when I had to deal with Modbus over TCP.</p>
+            <pre><code><span class="type-ref">T</span> <span class="member">BitConverterPlus</span>&lt;<span class="type-ref">T</span>&gt;(<span class="type">bool</span> <span class="var">isBigEndian</span>, <span class="type">byte</span>[] <span class="var">bytes</span>, <span class="type">int</span> <span class="var">startIndex</span> = <span class="val">0</span>)
+{
+    <span class="type">var</span> <span class="var">len</span> = <span class="var">bytes</span>.<span class="var">Length</span>;
+    <span class="type">var</span> <span class="var">bytesCopy</span> = <span class="type">new</span> <span class="type">byte</span>[<span class="var">len</span>];
+    <span class="var">Array</span>.<span class="member">Copy</span>(<span class="var">bytes</span>, <span class="var">bytesCopy</span>, <span class="var">len</span>);
+
+    <span class="keyword">if</span> (<span class="var">BitConverter</span>.<span class="var">IsLittleEndian</span> ? <span class="var">isBigEndian</span> : !<span class="var">isBigEndian</span>)
+    {
+        <span class="var">Array</span>.<span class="member">Reverse</span>(<span class="var">bytesCopy</span>);
+        <span class="type">var</span> <span class="var">typeSize</span> = <span class="var">System</span>.<span class="var">Runtime</span>.<span class="var">InteropServices</span>.<span class="var">Marshal</span>.<span class="member">SizeOf</span>(<span class="type">default</span>(<span class="type-ref">T</span>));
+        <span class="var">startIndex</span> = (<span class="var">len</span> - <span class="var">typeSize</span>) - <span class="var">startIndex</span>;
+    }
+    <span class="type">var</span> <span class="var">paramAray</span> = <span class="type">new</span> <span class="type">object</span>[] { <span class="var">bytesCopy</span>, <span class="var">startIndex</span> };
+
+    <span class="type">var</span> <span class="var">typeName</span> = <span class="type">typeof</span>(<span class="type-ref">T</span>).<span class="var">Name</span>;
+    <span class="type">var</span> <span class="var">methodInfo</span> = (<span class="type">typeof</span>(<span class="type-ref">BitConverter</span>)).<span class="member">GetMethod</span>(<span class="string">"To"</span> + <span class="var">typeName</span>);
+    <span class="type">var</span> <span class="var">obj</span> = (<span class="type-ref">T</span>)<span class="var">methodInfo</span>.<span class="member">Invoke</span>(<span class="type">null</span>, <span class="var">paramAray</span>);
+    <span class="keyword">return</span> <span class="var">obj</span>;
+}</code></pre>
+        </section>
+        <footer>&copy; Sport Monkey</footer>
+    </body>
+</html>

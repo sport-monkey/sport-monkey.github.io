@@ -1,0 +1,360 @@
+<html>
+<head>
+<title>Webaphore</title>
+<style>
+	body {
+		padding: 0;
+		margin: 0;
+		background: #bbf;
+		font-family: Arial, sans-serif;
+	}
+	#cols {
+		display: flex;
+		flex-direction: row;
+		height: 100%;
+	}
+	#cols > div {
+		width: 33%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+	}
+	div.images > img {
+		width: 75px;
+	}
+	#result {
+		font-weight: bold;
+		font-size: 40px;
+	}
+</style>
+</head>
+<body>
+<div id="cols">
+	<div>
+		<div><img src="webaphore/0.png"><input type="radio" name="higher" value="0" checked></div>
+		<div><img src="webaphore/1.png"><input type="radio" name="higher" value="1"></div>
+		<div><img src="webaphore/2.png"><input type="radio" name="higher" value="2"></div>
+		<div><img src="webaphore/3.png"><input type="radio" name="higher" value="3"></div>
+		<div><img src="webaphore/4.png"><input type="radio" name="higher" value="4"></div>
+		<div><img src="webaphore/5.png"><input type="radio" name="higher" value="5"></div>
+		<div><img src="webaphore/6.png"><input type="radio" name="higher" value="6"></div>
+		<div><img src="webaphore/7.png"><input type="radio" name="higher" value="7"></div>
+		<div><img src="webaphore/8.png"><input type="radio" name="higher" value="8"></div>
+		<div><img src="webaphore/9.png"><input type="radio" name="higher" value="9"></div>
+		<div><img src="webaphore/A.png"><input type="radio" name="higher" value="A"></div>
+		<div><img src="webaphore/B.png"><input type="radio" name="higher" value="B"></div>
+		<div><img src="webaphore/C.png"><input type="radio" name="higher" value="C"></div>
+		<div><img src="webaphore/D.png"><input type="radio" name="higher" value="D"></div>
+		<div><img src="webaphore/E.png"><input type="radio" name="higher" value="E"></div>
+		<div><img src="webaphore/F.png"><input type="radio" name="higher" value="F"></div>
+	</div>
+	<div>
+		<div><img src="webaphore/0.png"><input type="radio" name="lower" value="0" checked></div>
+		<div><img src="webaphore/1.png"><input type="radio" name="lower" value="1"></div>
+		<div><img src="webaphore/2.png"><input type="radio" name="lower" value="2"></div>
+		<div><img src="webaphore/3.png"><input type="radio" name="lower" value="3"></div>
+		<div><img src="webaphore/4.png"><input type="radio" name="lower" value="4"></div>
+		<div><img src="webaphore/5.png"><input type="radio" name="lower" value="5"></div>
+		<div><img src="webaphore/6.png"><input type="radio" name="lower" value="6"></div>
+		<div><img src="webaphore/7.png"><input type="radio" name="lower" value="7"></div>
+		<div><img src="webaphore/8.png"><input type="radio" name="lower" value="8"></div>
+		<div><img src="webaphore/9.png"><input type="radio" name="lower" value="9"></div>
+		<div><img src="webaphore/A.png"><input type="radio" name="lower" value="A"></div>
+		<div><img src="webaphore/B.png"><input type="radio" name="lower" value="B"></div>
+		<div><img src="webaphore/C.png"><input type="radio" name="lower" value="C"></div>
+		<div><img src="webaphore/D.png"><input type="radio" name="lower" value="D"></div>
+		<div><img src="webaphore/E.png"><input type="radio" name="lower" value="E"></div>
+		<div><img src="webaphore/F.png"><input type="radio" name="lower" value="F"></div>
+	</div>
+	<div>
+		<div class="images">
+			<img id="highImg" src="webaphore/1.png">
+			<img id="lowImg" src="webaphore/1.png">
+		</div>
+		<div id="data"></div>
+		<div id="result"></div>
+	</div>
+</div>
+<script>
+
+	var val = [];
+	val[0] = "[NUL]";
+	val[1] = "[SOH]";
+	val[2] = "[STX]";
+	val[3] = "[ETX]";
+	val[4] = "[EOT]";
+	val[5] = "[ENQ]";
+	val[6] = "[ACK]";
+	val[7] = "[BEL]";
+	val[8] = "[BS]";
+	val[9] = "[HT]";
+	val[10] = "[LF]";
+	val[11] = "[VT]";
+	val[12] = "[FF]";
+	val[13] = "[CR]";
+	val[14] = "[SO]";
+	val[15] = "[SI]";
+	val[16] = "[DLE]";
+	val[17] = "[DC1]";
+	val[18] = "[DC2]";
+	val[19] = "[DC3]";
+	val[20] = "[DC4]";
+	val[21] = "[NAK]";
+	val[22] = "[SYN]";
+	val[23] = "[ETB]";
+	val[24] = "[CAN]";
+	val[25] = "[EM]";
+	val[26] = "[SUB]";
+	val[27] = "[ESC]";
+	val[28] = "[FS]";
+	val[29] = "[GS]";
+	val[30] = "[RS]";
+	val[31] = "[US]";
+	val[32] = "[ ]";
+	val[33] = "&#33;";
+	val[34] = "&#34;";
+	val[35] = "&#35;";
+	val[36] = "&#36;";
+	val[37] = "&#37;";
+	val[38] = "&#38;";
+	val[39] = "&#39;";
+	val[40] = "&#40;";
+	val[41] = "&#41;";
+	val[42] = "&#42;";
+	val[43] = "&#43;";
+	val[44] = "&#44;";
+	val[45] = "&#45;";
+	val[46] = "&#46;";
+	val[47] = "&#47;";
+	val[48] = "&#48;";
+	val[49] = "&#49;";
+	val[50] = "&#50;";
+	val[51] = "&#51;";
+	val[52] = "&#52;";
+	val[53] = "&#53;";
+	val[54] = "&#54;";
+	val[55] = "&#55;";
+	val[56] = "&#56;";
+	val[57] = "&#57;";
+	val[58] = "&#58;";
+	val[59] = "&#59;";
+	val[60] = "&#60;";
+	val[61] = "&#61;";
+	val[62] = "&#62;";
+	val[63] = "&#63;";
+	val[64] = "&#64;";
+	val[65] = "&#65;";
+	val[66] = "&#66;";
+	val[67] = "&#67;";
+	val[68] = "&#68;";
+	val[69] = "&#69;";
+	val[70] = "&#70;";
+	val[71] = "&#71;";
+	val[72] = "&#72;";
+	val[73] = "&#73;";
+	val[74] = "&#74;";
+	val[75] = "&#75;";
+	val[76] = "&#76;";
+	val[77] = "&#77;";
+	val[78] = "&#78;";
+	val[79] = "&#79;";
+	val[80] = "&#80;";
+	val[81] = "&#81;";
+	val[82] = "&#82;";
+	val[83] = "&#83;";
+	val[84] = "&#84;";
+	val[85] = "&#85;";
+	val[86] = "&#86;";
+	val[87] = "&#87;";
+	val[88] = "&#88;";
+	val[89] = "&#89;";
+	val[90] = "&#90;";
+	val[91] = "&#91;";
+	val[92] = "&#92;";
+	val[93] = "&#93;";
+	val[94] = "&#94;";
+	val[95] = "&#95;";
+	val[96] = "&#96;";
+	val[97] = "&#97;";
+	val[98] = "&#98;";
+	val[99] = "&#99;";
+	val[100] = "&#100;";
+	val[101] = "&#101;";
+	val[102] = "&#102;";
+	val[103] = "&#103;";
+	val[104] = "&#104;";
+	val[105] = "&#105;";
+	val[106] = "&#106;";
+	val[107] = "&#107;";
+	val[108] = "&#108;";
+	val[109] = "&#109;";
+	val[110] = "&#110;";
+	val[111] = "&#111;";
+	val[112] = "&#112;";
+	val[113] = "&#113;";
+	val[114] = "&#114;";
+	val[115] = "&#115;";
+	val[116] = "&#116;";
+	val[117] = "&#117;";
+	val[118] = "&#118;";
+	val[119] = "&#119;";
+	val[120] = "&#120;";
+	val[121] = "&#121;";
+	val[122] = "&#122;";
+	val[123] = "&#123;";
+	val[124] = "&#124;";
+	val[125] = "&#125;";
+	val[126] = "&#126;";
+	val[127] = "[DELETE]";
+	val[128] = "&#128;";
+	val[129] = "<i>No symbol for this value</i>"	 	 ;
+	val[130] = "&#130;";
+	val[131] = "&#131;";
+	val[132] = "&#132;";
+	val[133] = "&#133;";
+	val[134] = "&#134;";
+	val[135] = "&#135;";
+	val[136] = "&#136;";
+	val[137] = "&#137;";
+	val[138] = "&#138;";
+	val[139] = "&#139;";
+	val[140] = "&#140;";
+	val[141] = "<i>No symbol for this value</i>"	 	 	 	 ;
+	val[142] = "&#142;";
+	val[143] = "<i>No symbol for this value</i>";
+	val[144] = "<i>No symbol for this value</i>";
+	val[145] = "&#145;";
+	val[146] = "&#146;";
+	val[147] = "&#147;";
+	val[148] = "&#148;";
+	val[149] = "&#149;";
+	val[150] = "&#150;";
+	val[151] = "&#151;";
+	val[152] = "&#152;";
+	val[153] = "&#153;";
+	val[154] = "&#154;";
+	val[155] = "&#155;";
+	val[156] = "&#156;";
+	val[157] = "<i>No symbol for this value</i>";
+	val[158] = "&#158;";
+	val[159] = "&#159;";
+	val[160] = "&#160;";
+	val[161] = "&#161;";
+	val[162] = "&#162;";
+	val[163] = "&#163;";
+	val[164] = "&#164;";
+	val[165] = "&#165;";
+	val[166] = "&#166;";
+	val[167] = "&#167;";
+	val[168] = "&#168;";
+	val[169] = "&#169;";
+	val[170] = "&#170;";
+	val[171] = "&#171;";
+	val[172] = "&#172;";
+	val[173] = "&#173;";
+	val[174] = "&#174;";
+	val[175] = "&#175;";
+	val[176] = "&#176;";
+	val[177] = "&#177;";
+	val[178] = "&#178;";
+	val[179] = "&#179;";
+	val[180] = "&#180;";
+	val[181] = "&#181;";
+	val[182] = "&#182;";
+	val[183] = "&#183;";
+	val[184] = "&#184;";
+	val[185] = "&#185;";
+	val[186] = "&#186;";
+	val[187] = "&#187;";
+	val[188] = "&#188;";
+	val[189] = "&#189;";
+	val[190] = "&#190;";
+	val[191] = "&#191;";
+	val[192] = "&#192;";
+	val[193] = "&#193;";
+	val[194] = "&#194;";
+	val[195] = "&#195;";
+	val[196] = "&#196;";
+	val[197] = "&#197;";
+	val[198] = "&#198;";
+	val[199] = "&#199;";
+	val[200] = "&#200;";
+	val[201] = "&#201;";
+	val[202] = "&#202;";
+	val[203] = "&#203;";
+	val[204] = "&#204;";
+	val[205] = "&#205;";
+	val[206] = "&#206;";
+	val[207] = "&#207;";
+	val[208] = "&#208;";
+	val[209] = "&#209;";
+	val[210] = "&#210;";
+	val[211] = "&#211;";
+	val[212] = "&#212;";
+	val[213] = "&#213;";
+	val[214] = "&#214;";
+	val[215] = "&#215;";
+	val[216] = "&#216;";
+	val[217] = "&#217;";
+	val[218] = "&#218;";
+	val[219] = "&#219;";
+	val[220] = "&#220;";
+	val[221] = "&#221;";
+	val[222] = "&#222;";
+	val[223] = "&#223;";
+	val[224] = "&#224;";
+	val[225] = "&#225;";
+	val[226] = "&#226;";
+	val[227] = "&#227;";
+	val[228] = "&#228;";
+	val[229] = "&#229;";
+	val[230] = "&#230;";
+	val[231] = "&#231;";
+	val[232] = "&#232;";
+	val[233] = "&#233;";
+	val[234] = "&#234;";
+	val[235] = "&#235;";
+	val[236] = "&#236;";
+	val[237] = "&#237;";
+	val[238] = "&#238;";
+	val[239] = "&#239;";
+	val[240] = "&#240;";
+	val[241] = "&#241;";
+	val[242] = "&#242;";
+	val[243] = "&#243;";
+	val[244] = "&#244;";
+	val[245] = "&#245;";
+	val[246] = "&#246;";
+	val[247] = "&#247;";
+	val[248] = "&#248;";
+	val[249] = "&#249;";
+	val[250] = "&#250;";
+	val[251] = "&#251;";
+	val[252] = "&#252;";
+	val[253] = "&#253;";
+	val[254] = "&#254;";
+	val[255] = "&#255;";
+
+	function updateLetter() {
+	  var high = document.querySelector('[name="higher"]:checked').value;
+	  var low = document.querySelector('[name="lower"]:checked').value;
+	  var hex = String(high) + String(low);
+	  var hexInt = parseInt(hex, 16);
+	  
+	  document.getElementById('highImg').src = "webaphore/" + String(high) + ".png";
+	  document.getElementById('lowImg').src = "webaphore/" + String(low) + ".png";
+	  document.getElementById('data').innerText = "0x" + hex + " (" + String(hexInt) + ")";
+	  document.getElementById('result').innerHTML = val[hexInt];
+	}
+
+	function bind(item, index) {
+		item.onclick = updateLetter;
+	}
+	
+	var inps = [...document.getElementsByTagName('input')].forEach(bind);
+	updateLetter();
+</script>
+</body>
+</html>
